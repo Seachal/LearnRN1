@@ -6,6 +6,8 @@
 		"start": "react-native start",
 		"test": "jest"
 	},
+//	react 和 react-native有一定的对应关系
+
 	"dependencies": {
 		"react": "15.4.2",
 		"react-native": "^0.41.0"
