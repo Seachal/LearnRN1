@@ -1,84 +1,11 @@
 import React, {Component} from 'react';
 import {
-    AppRegistry, Navigator, BackAndroid, Platform
+    StyleSheet, Text, View, Dimensions, PixelRatio, TextInput
 } from 'react-native';
 
-// 导入来两个 自定义的RN组件
-import LoginLeaf from './LoginLeaf';
-import WaitingLeaf from './WaitingLeaf';
-
-export default class NaviModule extends Component {
-    constructor(props) {
-        super(props);
-        //对这种写法还是不是很理解，需要回顾一下
-        this.renderScene = this.renderScene.bind(this);
-        this.configureScene = this.configureScene.bind(this);
-        this.handleBackAndroid = this.handleBackAndroid.bind(this);
-    }
-
-    // 视图 转换时使用何种效果   驶入特意使这个名字与Navigator组件的configureScene函数同名，  在定义与挂接时，可以清楚地知道这个函数的用途
-    configureScene(route) {
-        return Navigator.SceneConfigs.FadeAndroid;
-    }
-
-    // 如何挂接当前视图
-    renderScene(router, navigator) {
-        // NaviModule 组件的navigator变量被赋值
-        this.navigator = navigator;
-        switch (router.name) {
-            case "login":
-                return < LoginLeaf navigator={navigator}/>;
-            case "waiting":
-                return <WaitingLeaf phoneNumber={router.phoneNumber}
-                                    userPW={router.userPW} navigator={navigator}
-                />
-        }
-    }
-
-    // NaviModule 组件的渲染函数声明它只有一个组件： navigator
-// initialRoute 等是 Naviga
-// tor 的pros*
-    render() {
-        return (
-            // initialRoute 为啥是双花括号
-            <Navigator
-                initialRoute={{name: 'login'}}
-                configureScene={this.configureScene}
-                renderScene={this.renderScene}
-            />
-        );
-    }
-
-    //
-    handleBackAndroid() {
-        if (this.navigator.getCurrentRoutes().length > 1) {
-            this.navigator.pop();
-            return true;
-        }
-        return false;
-    }
-
-
-    // react框架  生命周期函数， 检测当前的运行平台是否为android平台，  如果是则设置一个对android手机后退事件的监听器
-    //componentDidMount 可以代码提示
-    componentDidMount() {
-        if (Platform.OS === "android")
-            BackAndroid.addEventListener(
-                'hardwareBackPress', this.handleBackAndroid);
-
-    }
-
-    // react框架  生命周期函数， 函数在组件被移除前，清楚组件被挂接时设置的后退键事件监听器。
-    //componentWillUnmount
-    componentWillUnmount() {
-        if (Platform.OS === "android") BackAndroid.removeEventListener(
-            'hardwareBackPress', this.handleBackAndroid);
-    }
-}
-AppRegistry.registerComponent('LearnRN1', () => NaviModule);
-/*
+let widthOfMargin = Dimensions.get('window').width * 0.05;
 //  定义一个组件（实质上是一个JS类）
-export default class LearnRN1 extends Component {
+export default class LoginLeaf extends Component {
 
 
     constructor(props) {
@@ -143,13 +70,32 @@ export default class LearnRN1 extends Component {
                            onChangeText={this.updatePW}
                 />
 
-                <Text style={styles.bigTextPrompt}>
+                <Text style={styles.bigTextPrompt}
+                      onPress={() => this.userPressConfirm()}
+                >
                     确 定
                 </Text>
-
+                <Text style={styles.bigTextPrompt}
+                      onPress={() => this.userPressAddressBook()}
+                >
+                    通讯录
+                </Text>
             </View>
         );
     }
+    // push函数传入的变量成为renderScene函数的第一个参数（一个router实例），  跳转到witing
+    userPressConfirm(){
+        this.props.navigator.push({
+            phoneNumber:this.state.inputedNum,
+            userPW: this.state.inputedPW,
+            name:'waiting',
+        })
+    }
+    
+    userPressAddressBook(){
+        
+    }
+    
 }
 // 类似css，实质上是声明了一个变量
 let styles = StyleSheet.create({
@@ -180,9 +126,6 @@ let styles = StyleSheet.create({
     }
 });
 
-AppRegistry.registerComponent('LearnRN1', () => LearnRN1);
-console.ignoredYellowBox = ['Remote debugger'];
-*/
 
 //粗蓝色 关键字 ， 粗紫色  ？自己写的事state，官方写的不止到时什么； 粗绿色 值， 细浅黄色 函数名（自定义，非自定义），
 //  细绿色  变量 常量
