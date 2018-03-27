@@ -180,6 +180,7 @@ export default class LearnRN1 extends Component {
     }
 }
 
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

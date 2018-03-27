@@ -75,7 +75,13 @@ export default class NaviModule extends Component {
             'hardwareBackPress', this.handleBackAndroid);
     }
 }
+
+
 AppRegistry.registerComponent('LearnRN1', () => NaviModule);
+
+
+
+
 /*
 //  定义一个组件（实质上是一个JS类）
 export default class LearnRN1 extends Component {

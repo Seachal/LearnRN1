@@ -3,6 +3,9 @@ import {
     StyleSheet, Text, View
 } from 'react-native';
 
+
+
+
 export default class WaitingLeaf extends Component {
     constructor(props) {
         super(props);
@@ -33,6 +36,18 @@ export default class WaitingLeaf extends Component {
     onGobackPressed() {
         this.props.navigator.pop();
     }
+
+
+}
+// 属性确认 （属性验证、类型验证）
+WaitingLeaf.propTypes ={
+    phoneNumber:React.PropTypes.string,
+    userPW:React.PropTypes.string.isRequired,
+}
+
+WaitingLeaf.defaultProps ={
+    phoneNumber : '123456',
+    userPW : '456123'
 }
 
 let styles = StyleSheet.create({
@@ -54,3 +69,4 @@ let styles = StyleSheet.create({
         fontSize: 60
     }
 })
+
