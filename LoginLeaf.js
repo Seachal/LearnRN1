@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    StyleSheet, Text, View, Dimensions, PixelRatio, TextInput
+    StyleSheet, Text, View, Dimensions, PixelRatio, TextInput,Alert
 } from 'react-native';
 
 let widthOfMargin = Dimensions.get('window').width * 0.05;
@@ -85,13 +85,31 @@ export default class LoginLeaf extends Component {
     }
     // push函数传入的变量成为renderScene函数的第一个参数（一个router实例），  跳转到witing
     userPressConfirm(){
+        // this.props.navigator.push({
+        //     phoneNumber:this.state.inputedNum,
+        //     userPW: this.state.inputedPW,
+        //     name:'waiting',
+        // })
+        // 上面注释的代码是因为要写  alert的代码所以暂时注释掉
+        Alert.alert(
+            // 一个''内的内容是一行吗？  记住最后又一个  逗号
+             '提示',
+             '确定使用' + this.state.inputedNum+'号码登录吗？',
+             [
+                 { text: '取消', onPress :( ()=>{}),style:'cancel'}, //按下取消 无操作
+                 {text:'确定', onPress:this.jumpToWaiting}
+             ]
+        );
+    }
+    jumpToWaiting() {
         this.props.navigator.push({
             phoneNumber:this.state.inputedNum,
             userPW: this.state.inputedPW,
             name:'waiting',
-        })
+        });
     }
-    
+
+
     userPressAddressBook(){
         
     }
